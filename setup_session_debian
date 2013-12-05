@@ -1,0 +1,10 @@
+#!/bin/bash
+# Usage ./setup_session <pub_key>
+
+chmod a+x stop_hacking_debian
+cp stop_hacking_debian /bin/stop_hacking
+chmod a+x invoke_session_debian
+cp invoke_session_debian /bin/invoke_session
+
+mkdir -p ~/.ssh/
+echo $1 >> ~/.ssh/authorized_keys
