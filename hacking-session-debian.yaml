@@ -3,10 +3,9 @@ metadata:
   format: "Lava-Test-Shell Test Definition 1.0"
   description: "SSH Hacking Session - Tyler Baker"
   version: 1.0
-    
-default_params:
-        - "PUB_KEY=None"
-        - "GATEWAY=192.168.1.1"
+  default_params:
+      - "PUB_KEY=None"
+      - "GATEWAY=192.168.1.1"
 
 install:
     deps:
@@ -15,4 +14,4 @@ install:
 run:
   steps:
     - ./setup_session_debian "$PUB_KEY"
-    - ./invoke_session_debian "$GATEWAY"
+    - ./invoke_session_debian $GATEWAY
