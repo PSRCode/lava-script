@@ -4,7 +4,7 @@ metadata:
   description: "SSH Hacking Session - Tyler Baker"
   version: 1.0
 
-params:
+default_params:
     - "PUB_KEY=None"
     - "GATEWAY=192.168.1.1"
 
