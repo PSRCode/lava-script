@@ -1,12 +1,12 @@
 metadata:
   name: hacking-session-debian
   format: "Lava-Test-Shell Test Definition 1.0"
-  description: "SSH Hacking Session - Tyler Baker"
+  description: "SSH Hacking Session"
   version: 1.0
 
 params:
-  PUB_KEY: None
-  GATEWAY: 192.168.1.1
+    PUB_KEY: None
+    GATEWAY: 192.168.1.1
 
 install:
     deps:
