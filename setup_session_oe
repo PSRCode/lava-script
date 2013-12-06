@@ -1,0 +1,10 @@
+#!/bin/bash
+# Usage ./setup_session <lp_username>
+
+chmod a+x stop_hacking_oe
+cp stop_hacking_oe /bin/stop_hacking
+chmod a+x invoke_session_oe
+cp invoke_session_oe /bin/invoke_session
+
+mkdir -p ~/.ssh/
+echo $1 >> ~/.ssh/authorized_keys

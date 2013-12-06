@@ -1,0 +1,30 @@
+{
+    "actions": [
+        {
+            "command": "deploy_linaro_image",
+            "parameters": {
+                "image": "http://community.validation.linaro.org/images/kvm/ubuntu-12-04-server-base-lava.img.gz"
+            }
+        },
+        {
+            "command": "lava_test_shell",
+            "parameters": {
+                "testdef_repos": [
+                    {
+                        "git-repo": "http://staging.git.linaro.org/git/lava-team/hacking-session.git",
+                        "parameters": {
+                            "PUB_KEY": "<PUB_KEY (REQUIRED) (DEFAULT=None)>",
+                            "GATEWAY": "<GATEWAY (OPTIONAL) (DEFAULT=192.168.1.1)>"
+                        },
+                        "testdef": "hacking-session-debian.yaml"
+                    }
+                ],
+                "timeout": 18000
+            }
+        }
+    ],
+    "device_type": "kvm",
+    "health_check": false,
+    "job_name": "kvm-hacking",
+    "timeout": 18000
+}
