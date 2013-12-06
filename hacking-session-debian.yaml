@@ -5,8 +5,8 @@ metadata:
   version: 1.0
 
 params:
-  - PUB_KEY: None
-  - GATEWAY: 192.168.1.1
+  PUB_KEY: None
+  GATEWAY: 192.168.1.1
 
 install:
     deps:
