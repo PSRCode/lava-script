@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage ./invoke_session
+# Usage ./invoke_session <gateway>
 
 # Hack for now until lava-test-shell is smart enough to know it's dispatcher ip
 gateway=$1

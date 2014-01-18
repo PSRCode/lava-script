@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage ./setup_session <lp_username>
+# Usage ./setup_session <pub_key>
 
 chmod a+x stop_hacking_oe
 cp stop_hacking_oe /bin/stop_hacking
