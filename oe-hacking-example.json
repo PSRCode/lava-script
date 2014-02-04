@@ -32,7 +32,7 @@
                         "git-repo": "http://staging.git.linaro.org/git/lava-team/hacking-session.git",
                         "parameters": {
                             "PUB_KEY": "<PUB_KEY (REQUIRED) (DEFAULT=None)>",
-                            "GATEWAY": "<GATEWAY (OPTIONAL) (DEFAULT=192.168.1.1)>"
+                            "GATEWAY": "<GATEWAY (OPTIONAL) (DEFAULT=10.0.0.1)>"
                         },
                         "testdef": "hacking-session-oe.yaml"
                     }
