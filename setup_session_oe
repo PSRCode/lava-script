@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Usage ./setup_session <pub_key>
 
 chmod a+x stop_hacking_oe

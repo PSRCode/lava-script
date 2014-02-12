@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Usage ./invoke_session <gateway>
 
 # Hack for now until lava-test-shell is smart enough to know it's dispatcher ip
@@ -12,7 +12,7 @@ ip_addr=$(ifconfig `ip route get $gateway | cut -d ' ' -f3` | grep 'inet addr' |
 hostname=$(cat /etc/hostname)
 
 # Set the PATH to use the LAVA api
-echo "export PATH=/lava/bin/:$PATH" > ~/.bashrc
+echo "export PATH=/lava/bin/:$PATH" > ~/.shrc
 
 echo ""
 echo ""
