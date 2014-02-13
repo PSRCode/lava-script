@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 rm /run/hacking/hacking.pid
 rm ~/.ssh/authorized_keys
 /etc/init.d/sshd stop
