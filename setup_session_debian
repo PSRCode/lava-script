@@ -8,3 +8,4 @@ cp invoke_session_debian /bin/invoke_session
 
 mkdir -p ~/.ssh/
 echo $1 >> ~/.ssh/authorized_keys
+echo "Public Key Installed: $1"

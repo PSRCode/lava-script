@@ -3,6 +3,7 @@
 
 # Hack for now until lava-test-shell is smart enough to know it's dispatcher ip
 gateway=$1
+echo "Target's Gateway: $gateway"
 
 # Copy invoke session
 cp /bin/invoke_session /etc/init.d/invoke_session
