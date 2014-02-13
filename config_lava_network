@@ -1,0 +1,37 @@
+#!/bin/sh
+
+lava_mac="x"
+
+eth_from_mac()
+{
+        eth=`ifconfig -a | grep $1 | cut -d " " -f1`
+        echo ${eth}
+}
+
+config()
+{
+        echo "attempting to bring up $1"
+        cat /etc/network/interfaces | grep -v $1 > /tmp/interfaces
+        cat /tmp/interfaces > /etc/network/interfaces
+        echo "auto $1" >> /etc/network/interfaces
+        echo "iface $1 inet dhcp" >> /etc/network/interfaces
+}
+
+
+for x in `cat /proc/cmdline`
+do
+        if [ `echo ${x} | grep -c lava_mac` -gt 0 ]
+        then
+                lava_mac=$(echo ${x} | cut -d= -f2)
+        fi
+done
+
+if [ "${lava_mac}" != "x" ]
+then
+        echo "Found a LAVA MAC in kernel cmdline: ${lava_mac}"
+        eth=`eth_from_mac ${lava_mac}`
+        config ${eth}
+else
+        echo "No LAVA Mac found, bringing up eth0 as a guess"
+        config eth0
+fi
