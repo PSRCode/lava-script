@@ -10,5 +10,5 @@ mkdir -p ~/.ssh/
 echo $1 >> ~/.ssh/authorized_keys
 echo "Public Key Installed: $1"
 
-/etc/init.d/sshd restart
+/etc/init.d/ssh restart
 echo "sshd re-started"
