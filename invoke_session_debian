@@ -1,8 +1,13 @@
 #!/bin/bash
 # Usage ./invoke_session <gateway>
 
-# Hack for now until lava-test-shell is smart enough to know it's dispatcher ip
-gateway=$1
+# If gateway isn't set we will guess it based on the default route
+if [ -z "$1" ]; then
+    gateway=`ip route get 8.8.8.8 | cut -d ' ' -f3`
+else
+    gateway=$1
+fi
+    
 echo "Target's Gateway: $gateway"
 
 if ! grep 'invoke_session' /etc/rc.local
