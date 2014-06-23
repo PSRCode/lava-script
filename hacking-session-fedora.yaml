@@ -1,0 +1,15 @@
+metadata:
+    name: hacking-session-fedora
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "SSH Hacking Session"
+params:
+    PUB_KEY: None
+    GATEWAY: 10.0.0.1
+install:
+    deps:
+        - openssh-server
+        - net-tools
+run:
+    steps:
+        - ./setup_session_fedora "$PUB_KEY"
+        - ./invoke_session_fedora "$GATEWAY"
