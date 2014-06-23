@@ -20,6 +20,7 @@ echo ""
 echo "*********************************************************************************************"
 echo -n "Please connect to: "
 echo -n "ssh "
+echo -n "-o UserKnownHostsFile=/dev/null "
 echo -n "-o StrictHostKeyChecking=no "
 echo -n "root@"
 echo -n $ip_addr
