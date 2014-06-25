@@ -8,7 +8,15 @@ cp invoke_session_debian /bin/invoke_session
 
 mkdir -p ~/.ssh/
 echo $1 >> ~/.ssh/authorized_keys
+chmod 0600 ~/.ssh/authorized_keys
 echo "Public Key Installed: $1"
+
+# Account for running under sudo
+if [ ! -z "${SUDO_USER}" ]; then
+    echo "Fixing up ${HOME}/.ssh permissions to ${SUDO_USER}:${SUDO_GID}"
+    chown -R ${SUDO_USER}:${SUDO_GID} ${HOME}/.ssh
+fi
+
 
 /etc/init.d/ssh restart
 echo "sshd re-started"
