@@ -22,7 +22,14 @@ hostname=$(cat /etc/hostname)
 # Set the PATH to use the LAVA api
 echo "export PATH=/lava/bin/:$PATH" > ~/.bashrc
 
-SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${ip_addr} (${hostname})"
+# Are we running under sudo for the real user?
+if [ -z "${SUDO_USER}" ]; then
+    REAL_USER=${USER}
+else
+    REAL_USER=${SUDO_USER}
+fi
+
+SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${REAL_USER}@${ip_addr} (${hostname})"
 echo "*******************************************************************************************************"
 echo "Please connect to: ${SSH_COMMAND}"
 echo "*******************************************************************************************************"
