@@ -6,12 +6,16 @@ metadata:
 
 params:
     PUB_KEY: None
+    IRC_SERVER: irc.freenode.net
 
 install:
     deps:
         - openssh-server
         - wget
+        - python-irc
 run:
     steps:
         - ./setup_session_debian "$PUB_KEY"
+        - export IRC_SERVER
+        - export IRC_USER
         - ./invoke_session_debian "$GATEWAY"

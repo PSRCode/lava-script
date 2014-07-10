@@ -22,21 +22,18 @@ hostname=$(cat /etc/hostname)
 # Set the PATH to use the LAVA api
 echo "export PATH=/lava/bin/:$PATH" > ~/.bashrc
 
-echo ""
-echo ""
+SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${ip_addr} (${hostname})"
 echo "*******************************************************************************************************"
-echo -n "Please connect to: "
-echo -n "ssh "
-echo -n "-o UserKnownHostsFile=/dev/null "
-echo -n "-o StrictHostKeyChecking=no "
-echo -n "root@"
-echo -n $ip_addr
-echo -n " "
-echo -n "("
-echo -n $hostname
-echo ")"
+echo "Please connect to: ${SSH_COMMAND}"
 echo "*******************************************************************************************************"
 echo ""
+if [ ! -z "${IRC_USER}" -a -e /usr/share/doc/python-irc/examples/irccat2.py ]; then
+    # make a unique user
+    cat <<EOF | python /usr/share/doc/python-irc/examples/irccat2.py ${IRC_SERVER} hs-${RANDOM} ${IRC_USER}
+Your hacking session is now ready
+Please connect to: ${SSH_COMMAND}"
+EOF
+fi 
 echo ""
 mkdir -p /run
 mkdir -p /run/hacking

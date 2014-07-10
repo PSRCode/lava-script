@@ -14,7 +14,9 @@
                         "git-repo": "http://staging.git.linaro.org/git/lava-team/hacking-session.git",
                         "parameters": {
                             "PUB_KEY": "<PUB_KEY (REQUIRED) (DEFAULT=None)>",
-                            "GATEWAY": "<GATEWAY (OPTIONAL) (DEFAULT=10.0.0.1)>"
+                            "GATEWAY": "<GATEWAY (OPTIONAL) (DEFAULT=None)>",
+                            "IRC_USER": "<IRC NICK (OPTIONAL) (DEFAULT=None)>",
+                            "IRC_SERVER": "<IRC SERVER (OPTIONAL) (DEFAULT=irc.freenode.net)>"
                         },
                         "testdef": "hacking-session-debian.yaml"
                     }

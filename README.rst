@@ -10,6 +10,8 @@ Parameters
 ==========
  * GATEWAY - The gateway for the network the target device is on (check with your LAVA admins)
  * PUB_KEY - A plain-text string containing the ssh public key(s) you wish to use to connect to the device over ssh
+ * IRC_NICK - An IRC nickname to notify when ready (Debian only)
+ * IRC_SERVER - The IRC server to use (Debian only)
  * testdef - The test definition (distrbution specific)
 
   * **hacking-session-debian.yaml** - run the hacking session on a Debian or Ubuntu filesystem, *openssh-server will be installed using the package manager*
