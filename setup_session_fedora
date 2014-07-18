@@ -1,0 +1,14 @@
+#!/bin/bash
+# Usage ./setup_session <pub_key>
+
+chmod a+x stop_hacking_fedora
+cp stop_hacking_fedora /bin/stop_hacking
+chmod a+x invoke_session_fedora
+cp invoke_session_fedora /bin/invoke_session
+
+mkdir -p ~/.ssh/
+echo $1 >> ~/.ssh/authorized_keys
+echo "Public Key Installed: $1"
+
+service sshd restart
+echo "sshd re-started"
