@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
 else
     gateway=$1
 fi
-    
+
 echo "Target's Gateway: $gateway"
 
 if ! grep 'invoke_session' /etc/rc.local
@@ -29,18 +29,19 @@ else
     REAL_USER=${SUDO_USER}
 fi
 
-SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${REAL_USER}@${ip_addr} (${hostname})"
+SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${REAL_USER}@${ip_addr}"
 echo "*******************************************************************************************************"
-echo "Please connect to: ${SSH_COMMAND}"
+echo "Please connect to: ${SSH_COMMAND} for access to (${hostname})"
 echo "*******************************************************************************************************"
 echo ""
 if [ ! -z "${IRC_USER}" -a -e /usr/share/doc/python-irc/examples/irccat2.py ]; then
     # make a unique user
     cat <<EOF | python /usr/share/doc/python-irc/examples/irccat2.py ${IRC_SERVER} hs-${RANDOM} ${IRC_USER}
 Your hacking session is now ready
-Please connect to: ${SSH_COMMAND}"
+Please connect to:
+${SSH_COMMAND}"
 EOF
-fi 
+fi
 echo ""
 mkdir -p /run
 mkdir -p /run/hacking
