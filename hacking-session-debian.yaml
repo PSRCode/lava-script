@@ -12,7 +12,6 @@ install:
     deps:
         - openssh-server
         - wget
-        - python-irc
 run:
     steps:
         - ./setup_session_debian "$PUB_KEY"
