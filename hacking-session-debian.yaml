@@ -17,4 +17,5 @@ run:
         - ./setup_session_debian "$PUB_KEY"
         - export IRC_SERVER
         - export IRC_USER
+        - export NOTIFY_URL
         - ./invoke_session_debian "$GATEWAY"

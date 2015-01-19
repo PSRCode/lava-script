@@ -45,6 +45,11 @@ ${SSH_COMMAND}
 EOF
     fi
 fi
+if [ ! -z "${NOTIFY_URL}" ]; then
+    if apt-get install -qq wget; then
+        wget -O - "${NOTIFY_URL}?ssh=${ip_addr}"
+    fi
+fi
 echo ""
 mkdir -p /run
 mkdir -p /run/hacking
