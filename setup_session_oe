@@ -3,12 +3,43 @@
 
 chmod a+x stop_hacking_oe
 cp stop_hacking_oe /bin/stop_hacking
+chmod a+x continue_hacking
+cp continue_hacking /bin/continue_hacking
 chmod a+x invoke_session_oe
 cp invoke_session_oe /bin/invoke_session
 
+if [ $# -ne 1 ]; then
+    lava-test-case public-key-installed --result fail
+    exit 1
+fi
+
 mkdir -p ~/.ssh/
 echo $1 >> ~/.ssh/authorized_keys
+if [ $? -ne 0 ]; then
+    lava-test-case public-key-installed --result fail
+fi
+chmod 0600 ~/.ssh/authorized_keys
 echo "Public Key Installed: $1"
+lava-test-case public-key-installed --result pass
 
-/etc/init.d/sshd restart
-echo "sshd re-started"
+# Account for running under sudo
+if [ ! -z "${SUDO_USER}" ]; then
+    echo "Fixing up ${HOME}/.ssh permissions to ${SUDO_USER}:${SUDO_GID}"
+    chown -R ${SUDO_USER}:${SUDO_GID} ${HOME}/.ssh
+fi
+
+# Change SSHD log level to DEBUG
+grep -P "^LogLevel" /etc/ssh/sshd_config
+if [ $? -eq 0 ]; then
+    sed -i "s/^LogLevel\ [A-Z]\+/LogLevel\ DEBUG/g" /etc/ssh/sshd_config
+else
+    echo "LogLevel DEBUG" >> /etc/ssh/sshd_config
+fi
+/etc/init.d/ssh restart
+if [ $? -eq 0 ]; then
+    lava-test-case sshd-restart --result pass
+    echo "sshd re-started"
+else
+    lava-test-case sshd-restart --result fail
+    echo "sshd re-start failed"
+fi

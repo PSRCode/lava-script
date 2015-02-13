@@ -1,0 +1,36 @@
+metadata:
+    name: hacking-session-android-host
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "Android hacking session over adb - host side"
+    maintainer:
+        - milosz.wasilewski@linaro.org
+    os:
+        - android
+    scope:
+        - functional
+    devices:
+        - kvm
+
+install:
+    deps:
+        - openssh-server
+        - wget
+        - android-tools-adb
+
+params:
+    PUB_KEY: None
+    GATEWAY: 10.0.0.1
+    IRC_SERVER: irc.freenode.net
+
+run:
+    steps:
+        - lava-wait hacking-send-ip
+        - IPADDR=`awk -F '=' '{print $2}' /tmp/lava_multi_node_cache.txt`
+        - adb connect $IPADDR
+        - adb wait-for-device
+        - ./setup_session_debian "$PUB_KEY"
+        - export IRC_SERVER
+        - export IRC_USER
+        - export NOTIFY_URL
+        - ./invoke_session_debian "$GATEWAY"
+        - lava-sync hacking-finished

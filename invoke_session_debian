@@ -3,7 +3,7 @@
 
 # If gateway isn't set we will guess it based on the default route
 if [ -z "$1" ]; then
-    gateway=`ip route get 8.8.8.8 | cut -d ' ' -f3`
+    gateway=`ip route get 8.8.8.8 | grep via | cut -d ' ' -f3`
 else
     gateway=$1
 fi
@@ -35,10 +35,19 @@ echo "* REAL_USER=${REAL_USER}, USER=${USER}, SUDO_USER=${SUDO_USER}"
 echo "Please connect to: ${SSH_COMMAND} for access to (${hostname})"
 echo "*******************************************************************************************************"
 echo ""
+
+cat <<EOF > ~/.bash_logout
+lava-test-case hacking-stopped-logout --result pass
+stop_hacking
+EOF
+
+IRC_AVAILABLE=false
 if [ ! -z "${IRC_USER}" ]; then
     if apt-get install -qq python-irc; then
+        IRC_AVAILABLE=true
+        TMP_IRC_USER=hs-${RANDOM}
         # make a unique user
-        cat <<EOF | python /usr/share/doc/python-irc/examples/irccat2.py ${IRC_SERVER} hs-${RANDOM} ${IRC_USER}
+        cat <<EOF | python /usr/share/doc/python-irc/examples/irccat2.py ${IRC_SERVER} ${TMP_IRC_USER} ${IRC_USER}
 Your hacking session is now ready
 Please connect to:
 ${SSH_COMMAND}
@@ -54,10 +63,45 @@ echo ""
 mkdir -p /run
 mkdir -p /run/hacking
 echo $$ > /run/hacking/hacking.pid
+TIMESTAMP=`stat -c %Y /run/hacking/hacking.pid`
+STARTED=false
+TERMINATED=false
 echo "Hacking session active..."
+lava-test-case hacking-session-active --result pass
+tail -f /var/log/syslog &
+echo $! > /run/hacking/tail.pid
 while [ -f /run/hacking/hacking.pid ]
 do
+    date
+    echo "===================="
+    who
+    echo "===================="
+    echo ""
 	sleep 10
+    LOGGEDIN=`who | grep pts | wc -l`
+    if ! $STARTED && [ $LOGGEDIN -gt 0 ]; then
+        STARTED=true
+    elif ! $STARTED && [ $LOGGEDIN -eq 0 ]; then
+        NOW=`date +%s`
+        ELAPSED=`expr $NOW - $TIMESTAMP`
+        if [ $ELAPSED -gt 3600 ]; then
+            echo "No user logged in. Terminating session..."
+            TERMINATED=true
+            if ${IRC_AVAILABLE}; then
+                # make a unique user
+                cat <<EOF | python /usr/share/doc/python-irc/examples/irccat2.py ${IRC_SERVER} ${TMP_IRC_USER} ${IRC_USER}
+Your hacking session was terminated due to inactivity
+There was no user logged in for ${ELAPSED} seconds.
+EOF
+            fi
+            lava-test-case hacking-session-terminated --result fail --measurement ${ELAPSED} --units seconds
+            stop_hacking
+        fi
+    fi
 done
 echo "Hacking session ended..."
-echo "<LAVA_TEST_RUNNER>: exiting"
+kill `cat /run/hacking/tail.pid`
+rm /run/hacking/tail.pid
+if ! ${TERMINATED}; then
+    lava-test-case hacking-session-terminated --result pass
+fi
