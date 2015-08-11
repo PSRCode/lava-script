@@ -38,7 +38,10 @@ echo ""
 echo ""
 
 cat <<EOF > ~/.bash_logout
-stop_hacking
+if [ $(who |egrep 'pts\/[0-9]+' |wc -l) -eq 1 ]; then
+    lava-test-case hacking-stopped-logout --result pass
+    stop_hacking
+fi
 EOF
 
 mkdir -p /run
