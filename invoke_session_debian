@@ -16,7 +16,7 @@ then
 fi
 
 # Obtain target IP and Hostname
-ip_addr=$(ifconfig `ip route get $gateway | cut -d ' ' -f3` | grep 'inet addr' |awk -F: '{split($2,a," "); print a[1] }')
+ip_addr=$(ip route get $gateway | awk '/src/{print $NF}')
 hostname=$(cat /etc/hostname)
 
 # Set the PATH to use the LAVA api
