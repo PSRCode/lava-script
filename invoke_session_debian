@@ -45,16 +45,9 @@ EOF
 
 IRC_AVAILABLE=false
 if [ ! -z "${IRC_USER}" ]; then
-    if apt-get install -qq python-irc; then
-        IRC_AVAILABLE=true
-        TMP_IRC_USER=hs-${RANDOM}
-        # make a unique user
-        cat <<EOF | python /usr/share/doc/python-irc/examples/irccat2.py ${IRC_SERVER} ${TMP_IRC_USER} ${IRC_USER}
-Your hacking session is now ready
-Please connect to:
-${SSH_COMMAND}
-EOF
-    fi
+    IRC_AVAILABLE=true
+    TMP_IRC_USER=hs-${RANDOM}
+    echo -e "\n\nNICK ${TMP_IRC_USER}\nUSER ${TMP_IRC_USER} 8 * :LAVA Hacking\nPRIVMSG ${IRC_USER} : ${SSH_COMMAND}\nQUIT \n" | nc -i 1 i${IRC_SERVER} 6667
 fi
 if [ ! -z "${NOTIFY_URL}" ]; then
     if apt-get install -qq wget; then
