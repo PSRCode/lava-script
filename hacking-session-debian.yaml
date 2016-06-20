@@ -6,7 +6,7 @@ metadata:
 
 params:
     PUB_KEY: None
-    IRC_SERVER: irc.freenode.net
+    IRC_SERVER: irc.oftc.net
 
 install:
     deps:
