@@ -47,7 +47,7 @@ IRC_AVAILABLE=false
 if [ ! -z "${IRC_USER}" ]; then
     IRC_AVAILABLE=true
     TMP_IRC_USER=hs-${RANDOM}
-    echo -e "\n\nNICK ${TMP_IRC_USER}\nUSER ${TMP_IRC_USER} 8 * :LAVA Hacking\nPRIVMSG ${IRC_USER} : ${SSH_COMMAND}\nQUIT \n" | nc -i 1 i${IRC_SERVER} 6667
+    echo -e "\n\nNICK ${TMP_IRC_USER}\nUSER ${TMP_IRC_USER} 8 * :LAVA Hacking\nPRIVMSG ${IRC_USER} : ${SSH_COMMAND}\nQUIT \n" | nc -i 1 ${IRC_SERVER} 6667
 fi
 if [ ! -z "${NOTIFY_URL}" ]; then
     if apt-get install -qq wget; then
